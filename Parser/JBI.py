@@ -90,17 +90,6 @@ class JBIParser:
         scaling_factor = 0.01
         return float_value * scaling_factor
 
-    def normalise_value(self, value: float, normalisation_constant: float = 0x3C23D70A):
-        """
-        Normalise a float value with a specific constant.
-
-        :param value: Input float value.
-        :param normalization_constant: Normalization constant (converted to float).
-        :return: Normalized float value.
-        """
-        normalisation_float = struct.unpack('f', struct.pack('I', normalisation_constant))[0]
-        return value * normalisation_float
-
     def parse(self) -> List[Tuple[Vector, Quaternion]]:
         """
         Parse the full JBI file and extract frame data.
