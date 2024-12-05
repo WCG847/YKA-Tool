@@ -26,6 +26,12 @@ class JBIParser:
         self.offset += 2
         return value
 
+    def read_int16(self) -> int:
+        """Read an signed 16-bit integer."""
+        value = struct.unpack_from('<h', self.data, self.offset)[0]
+        self.offset += 2
+        return value
+
     def read_float(self) -> float:
         """Read a single-precision floating-point number."""
         value = struct.unpack_from('<f', self.data, self.offset)[0]
@@ -49,9 +55,9 @@ class JBIParser:
 
         :return: A mathutils.Vector representing position.
         """
-        x = self.read_uint16()
-        y = self.read_uint16()
-        z = self.read_uint16()
+        x = self.read_int16()
+        y = self.read_int16()
+        z = self.read_int16()
         
         return Vector([self.convert_to_float(x), 
                        self.convert_to_float(y), 
@@ -63,10 +69,10 @@ class JBIParser:
 
         :return: A mathutils.Quaternion representing rotation.
         """
-        qx = self.read_uint16()
-        qy = self.read_uint16()
-        qz = self.read_uint16()
-        qw = self.read_uint16()
+        qx = self.read_int16()
+        qy = self.read_int16()
+        qz = self.read_int16()
+        qw = self.read_int16()
         
         return Quaternion([self.convert_to_float(qw), 
                            self.convert_to_float(qx), 
@@ -81,7 +87,7 @@ class JBIParser:
         :return: Normalised float value.
         """
         float_value = float(value)
-        scaling_factor = 0.01  # Example scaling factor
+        scaling_factor = 0.01
         return float_value * scaling_factor
 
     def normalise_value(self, value: float, normalisation_constant: float = 0x3C23D70A):
