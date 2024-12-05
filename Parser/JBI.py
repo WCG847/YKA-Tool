@@ -45,7 +45,7 @@ class JBIParser:
         :return: A tuple containing frame size and a boolean for pre-frame flags.
         """
         frame_indicator = self.read_uint8()
-        frame_size = (frame_indicator - 0x80) & 0xFF << 1
+        frame_size = (frame_indicator - 0x80) << 1
         is_pre_frame_flags = (frame_indicator & 0x20) != 0  # Second bit of the nibble
         return frame_size, is_pre_frame_flags
 
